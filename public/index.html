@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta property="og:title" content="Firebaseで作ったリアルタイムチャット" />
+    <meta property="og:type" content="chat" />
+    <meta property="og:description" content="BaaS（Firebase）で作られたリアルタイムチャット" />
+    <title>Firebaseで作ったリアルタイムチャット</title>
+    <!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../node_modules/uikit/dist/css/uikit.min.css"> -->
+    <!-- <script src="../node_modules/uikit/dist/js/uikit.min.js"></script> -->
+
+<!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/css/uikit.min.css" />
+<!-- UIkit JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit-icons.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <h1 class="logo">CHAT</h1>
+    </div>
+
+    <div class="container">
+        <div class="postarea cf">
+
+            <div class="postarea-text">
+                <textarea name="" id="content" cols="30" rows="10" placeholder="Enterで投稿"></textarea>
+            </div>
+
+            <div class="postarea-share cf">
+                <p>このチャットをシェアする！</p>
+                <div class="postarea-share-button cf">
+                    <script>
+                        var url = encodeURIComponent(location.href);
+                        document.write('<iframe src="//www.facebook.com/plugins/like.php?href='+url+'&amp;width&amp;    layout=button&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35" scrolling="no"     frameborder="0" style="border:none; overflow:hidden; height:20px;" allowTransparency="true"></  iframe>');
+                    </script>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-count="none">ツイート</a>
+                    <script>
+                        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?          'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://       platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script',     'twitter-wjs');
+                    </script>
+                </div>
+            </div>
+
+            <button id="post" class="postarea-button">投稿する</button>
+        </div>
+    </div>
+
+    <div id="messages" class="content">
+        <div id="dummy"></div>
+    </div>
+
+    <p class="footer"><strong>Forked by <a href="https://github.com/milk-cocoa/chat">Milkcocoa Chat</a></strong></p>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
