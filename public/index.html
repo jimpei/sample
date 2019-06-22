@@ -1,107 +1,215 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
     <meta property="og:title" content="Firebaseで作ったリアルタイムチャット" />
     <meta property="og:type" content="chat" />
-    <meta property="og:description" content="BaaS（Firebase）で作られたリアルタイムチャット" />
+    <meta
+      property="og:description"
+      content="BaaS（Firebase）で作られたリアルタイムチャット"
+    />
     <title>Firebaseで作ったリアルタイムチャット</title>
-    <style>html{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{font-family:游ゴシック,YuGothic,ヒラギノ角ゴ ProN W3,Hiragino Kaku Gothic ProN,メイリオ,Meiryo,Arial,sans-serif;font-size:15px;background:#f7f7f7;min-width:20pc;line-height:1.6;color:#3a342e}body,h1{margin:0}h1{font-size:2em;line-height:1.2}p{margin:1em 0 1.6em}a{color:#222;background:transparent}a:active,a:hover{color:#154be5;text-decoration:none;outline:0}a:focus{outline:thin dotted}textarea{overflow:auto;vertical-align:top}.cf:after,.cf:before{content:" ";display:table}.cf:after{clear:both}.cf{*zoom:1}.header{background-color:#1ba39c;width:100%;padding:.75em 0}.header .logo{font-family:Arial Black;font-weight:900;color:#fff;max-width:60pc;margin:0 auto;padding:0 .7em}.header .logo a{color:#fff}.container{width:100%;background-color:#45bfb6}.container .postarea{max-width:45pc;margin:0 auto;padding:2em 1.3em}.container .postarea .postarea-text{width:100%}.container .postarea .postarea-text textarea{font-size:1em;width:100%;border:1px solid #ededed;border-radius:5px;height:34px;resize:vertical;color:#3a342e;padding:.5em;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.container .postarea .postarea-share{float:left;width:9.5em}.container .postarea .postarea-share p{white-space:nowrap;color:#fff;font-size:.72em;margin:.5em 0 .1em}.container .postarea .postarea-share .postarea-share-button{width:100%;margin-right:-2em}.container .postarea .postarea-share .postarea-share-button a{font-size:1.5em;float:left;display:block;width:2.9em;text-align:center;background:#f7f7f7;color:#848484;text-decoration:none;height:1.8em;line-height:1.8em;border-radius:3px;border:1px solid #ededed;vertical-align:middle}.container .postarea .postarea-share .postarea-share-button .postarea-share-facebook{margin-right:.3em}.container .postarea .postarea-button{font-weight:700;margin-top:.6em;font-size:1em;height:3.85em;background:#f7f7f7;color:#848484;cursor:pointer;line-height:3.85em;border-radius:3px;text-align:center;border:1px solid #ededed;text-decoration:none;float:right;width:8.8em}.content{max-width:760px;margin:3em auto}.content .post{margin-top:2em;border-bottom:1px dotted #ccc;padding:0 1em 1em}.content .post .post-date{font-size:.7em;color:#848484;text-align:right;border:0;margin:0}.footer{font-size:.8em;color:#848484;max-width:760px;margin:2em auto 0;padding:0 1em 3em}.content .post .post-text{margin:0}.container .postarea .postarea-button:hover,.container .postarea .postarea-share .postarea-share-button a:hover{background:#e6e6e6}</style>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <!-- <style>html{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{font-family:游ゴシック,YuGothic,ヒラギノ角ゴ ProN W3,Hiragino Kaku Gothic ProN,メイリオ,Meiryo,Arial,sans-serif;font-size:15px;background:#f7f7f7;min-width:20pc;line-height:1.6;color:#3a342e}body,h1{margin:0}h1{font-size:2em;line-height:1.2}p{margin:1em 0 1.6em}a{color:#222;background:transparent}a:active,a:hover{color:#154be5;text-decoration:none;outline:0}a:focus{outline:thin dotted}textarea{overflow:auto;vertical-align:top}.cf:after,.cf:before{content:" ";display:table}.cf:after{clear:both}.cf{*zoom:1}.header{background-color:#1ba39c;width:100%;padding:.75em 0}.header .logo{font-family:Arial Black;font-weight:900;color:#fff;max-width:60pc;margin:0 auto;padding:0 .7em}.header .logo a{color:#fff}.container{width:100%;background-color:#45bfb6}.container .postarea{max-width:45pc;margin:0 auto;padding:2em 1.3em}.container .postarea .postarea-text{width:100%}.container .postarea .postarea-text textarea{font-size:1em;width:100%;border:1px solid #ededed;border-radius:5px;height:34px;resize:vertical;color:#3a342e;padding:.5em;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.container .postarea .postarea-share{float:left;width:9.5em}.container .postarea .postarea-share p{white-space:nowrap;color:#fff;font-size:.72em;margin:.5em 0 .1em}.container .postarea .postarea-share .postarea-share-button{width:100%;margin-right:-2em}.container .postarea .postarea-share .postarea-share-button a{font-size:1.5em;float:left;display:block;width:2.9em;text-align:center;background:#f7f7f7;color:#848484;text-decoration:none;height:1.8em;line-height:1.8em;border-radius:3px;border:1px solid #ededed;vertical-align:middle}.container .postarea .postarea-share .postarea-share-button .postarea-share-facebook{margin-right:.3em}.container .postarea .postarea-button{font-weight:700;margin-top:.6em;font-size:1em;height:3.85em;background:#f7f7f7;color:#848484;cursor:pointer;line-height:3.85em;border-radius:3px;text-align:center;border:1px solid #ededed;text-decoration:none;float:right;width:8.8em}.content{max-width:760px;margin:3em auto}.content .post{margin-top:2em;border-bottom:1px dotted #ccc;padding:0 1em 1em}.content .post .post-date{font-size:.7em;color:#848484;text-align:right;border:0;margin:0}.footer{font-size:.8em;color:#848484;max-width:760px;margin:2em auto 0;padding:0 1em 3em}.content .post .post-text{margin:0}.container .postarea .postarea-button:hover,.container .postarea .postarea-share .postarea-share-button a:hover{background:#e6e6e6}</style> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
-</head>
+  </head>
 
-<body>
-    <div class="header">
-        <h1 class="logo">CHAT</h1>
-    </div>
-
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">下山門チャット</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+          <li><a href="collapsible.html">JavaScript</a></li>
+        </ul>
+      </div>
+    </nav>
+    
     <div class="container">
-        <div class="postarea cf">
-
-            <div class="postarea-text">
-                <textarea name="" id="content" cols="30" rows="10" placeholder="Enterで投稿"></textarea>
-            </div>
-
-            <div class="postarea-share cf">
-                <p>このチャットをシェアする！</p>
-                <div class="postarea-share-button cf">
-                    <script>
-                    var url = encodeURIComponent(location.href);
-                    document.write('<iframe src="//www.facebook.com/plugins/like.php?href='+url+'&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px;" allowTransparency="true"></iframe>');
-                    </script>
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-count="none">ツイート</a>
-                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                </div>
-            </div>
-
-            <button id="post" class="postarea-button">投稿する</button>
+      <div class="section">
+        <div class="row">
+          <div class="col s12">
+            <textarea
+              name=""
+              id="content"
+              cols="30"
+              rows="10"
+              placeholder="Enterで投稿"
+              class="materialize-textarea"
+            ></textarea>
+          </div>
+          <div class="col s6"></div>
+          <div class="col s6">
+            <button id="post" class="waves-effect waves-light btn">
+              投稿する
+            </button>
+            <a class="btn disabled">押せないよ</a>
+          </div>
+          <div class="col s6"></div>
+          <div class="col s6">
+            <p>このチャットをシェアする！</p>
+            <a
+              href="https://twitter.com/share"
+              class="twitter-share-button"
+              data-lang="ja"
+              data-count="none"
+              >ツイート</a
+            >
+            <script>
+              !(function(d, s, id) {
+                var js,
+                  fjs = d.getElementsByTagName(s)[0],
+                  p = /^http:/.test(d.location) ? "http" : "https";
+                if (!d.getElementById(id)) {
+                  js = d.createElement(s);
+                  js.id = id;
+                  js.src = p + "://platform.twitter.com/widgets.js";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }
+              })(document, "script", "twitter-wjs");
+            </script>
+          </div>
         </div>
+      </div>
+
+      <div id="messages">
+        <div id="dummy1">↓ここに投稿される</div>
+        <div id="dummy">↑ここに投稿される</div>
+      </div>
     </div>
 
-    <div id="messages" class="content">
-        <div id="dummy"></div>
-    </div>
-
-    <p class="footer"><strong>Forked by <a href="https://github.com/milk-cocoa/chat">Milkcocoa Chat</a></strong></p>
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">ここはフッターです</h5>
+            <p class="grey-text text-lighten-4">
+              フッターの説明をいい感じに書く.
+            </p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Links</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2014 Copyright Text
+          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+      </div>
+    </footer>
 
     <script>
-        'use strict';
-        //Firebaseの初期化
-        firebase.initializeApp({databaseURL: "https://second-firebase-71178.firebaseio.com/"});
-        const database = firebase.database();
-        const ref = database.ref('messages');
-        let last_message = "dummy";
+      "use strict";
+      //Firebaseの初期化
+      firebase.initializeApp({
+        databaseURL: "https://second-firebase-71178.firebaseio.com/"
+      });
+      const database = firebase.database();
+      const ref = database.ref("messagesTable"); //テーブル名が入る
+      let last_message = "dummy";
 
-        //初期読み込み & pushイベント検知
-        ref.on("child_added", (snapshot) => {
-            renderMessage({
-                id: snapshot.key,
-                value: snapshot.val()
-            });
+      //初期読み込み & pushイベント検知
+      ref.on("child_added", snapshot => {
+        renderMessage({
+          id: snapshot.key,
+          value: snapshot.val()
         });
+      });
 
-        //インジェクション対策
-        const escapeHTML = (val) => $('<div>').text(val).html();
+      //インジェクション対策
+      const escapeHTML = val =>
+        $("<div>")
+          .text(val)
+          .html();
 
-        //投稿処理
-        const postAction = () => {
-            const content = escapeHTML($("#content").val());
-            if(content && content !== "") {
-                ref.push({
-                    title: 'タイトル',
-                    content: content,
-                    date: new Date().getTime()
-                })
-                .then((res)=>{
-                    console.log(res);
-                });
-            }
-            $("#content").val("");
-        };
+      //投稿処理
+      const postAction = () => {
+        const content = escapeHTML($("#content").val());
+        if (content && content !== "") {
+          ref
+            .push({
+              title: "テストカラム", //カラム名titile
+              content: content,
+              date: new Date().getTime()
+            })
+            .then(res => {
+              console.log(res);
+            });
+        }
+        $("#content").val("");
+      };
 
-        //メッセージをDOM追加
-        const renderMessage = (message) => {
-            const message_html = `<p class="post-text">${escapeHTML(message.value.content)}</p>`;
-            let date_html = '';
-            if(message.value.date) {
-                date_html = `<p class="post-date">${escapeHTML(new Date(message.value.date).toLocaleString())}</p>`;
-            }
-            $("#"+last_message).before(`<div id="${message.id}" class="post">${message_html}${date_html}</div>`);
-            last_message = message.id;
+      //メッセージをDOM追加
+      const renderMessage = message => {
+        // const message_html = `<p class="post-text">${escapeHTML(message.value.content)}</p>`;
+        const message_html = `<p>${escapeHTML(message.value.content)}</p>`;
+
+        let date_html = "";
+        if (message.value.date) {
+          // date_html = `<p class="post-date">${escapeHTML(new Date(message.value.date).toLocaleString())}</p>`;
+          date_html = `<p>${escapeHTML(
+            new Date(message.value.date).toLocaleString()
+          )}</p>`;
         }
 
-        //クリック時の処理
-        $('#post').click(() => postAction());
-        //エンターキータイプ時の処理
-        $('#content').keydown((e) => {
-            if(e.which == 13){
-                postAction();
-                return false;
-            }
-        });
+        // $("#"+last_message).before(`<div id="${message.id}" class="post">${message_html}${date_html}</div>`);
+        $("#" + last_message).before(
+          `<div id="${
+            message.id
+          }" class="card horizontal"><div class="card-stacked"><div class="card-content">${message_html}</div><div class="card-action">${date_html}</div></div></div>`
+        );
+
+        last_message = message.id;
+
+        // こんなのが生成される
+        // <div class="card horizontal">
+        //     <div class="card-stacked">
+        //         <div class="card-content">
+        //             <!-- <p>I am a very simple card. I am good at containing small bits of information.</p> -->
+        //         </div>
+        //         <div class="card-action">
+        //             <!-- <p>ここになにか</p> -->
+        //         </div>
+        //     </div>
+        // </div>
+
+        console.log("debug j");
+        console.log(message_html);
+        console.log(date_html);
+      };
+
+      //クリック時の処理
+      $("#post").click(() => postAction());
+      //エンターキータイプ時の処理
+      $("#content").keydown(e => {
+        if (e.which == 13) {
+          postAction();
+          return false;
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
